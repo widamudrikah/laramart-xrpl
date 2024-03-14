@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
     });
 
     // category
+    Route::controller(CategoryController::class)->group(function(){
+        Route::get('/category', 'index')->name('category');
+        Route::get('/category/create', 'create')->name('category-create');
+    });
     
 });
 
