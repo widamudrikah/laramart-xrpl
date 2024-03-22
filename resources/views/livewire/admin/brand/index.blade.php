@@ -20,11 +20,39 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            @forelse ($brands as $brand)
+                            <tr>
+                                <td>{{ $brand->id }}</td>
+                                <td>{{ $brand->name }}</td>
+                                <td>{{ $brand->slug }}</td>
+                                <td>{{ $brand->status == '1' ? 'Hidden' : 'Visible' }}</td>
+                                <td>
+                                    <a href="#" wire:click="editBrand({{$brand->id}})" class="btn btn-success btn-sm text-white" data-bs-toggle="modal" data-bs-target="#editBrandModal">Edit</a>
+                                    <a href="#" class="btn btn-danger btn-sm text-white">Delete</a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5">NO Brands found</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
                     </table>
+                    <div>
+                        {{ $brands->links() }}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
+@push('script')
+<script>
+    window.addEventListener('close-modal', event => {
+        $('#addBrandModal').modal('hide');
+        $('#editBrandModal').modal('hide');
+    })
+</script>
+@endpush
