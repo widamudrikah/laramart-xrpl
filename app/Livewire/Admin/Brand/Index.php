@@ -63,7 +63,7 @@ class Index extends Component
     }
 
     // proses update data
-    function updateBrand() {
+    public function updateBrand() {
         $validateData = $this->validate();
         Brand::findOrFail($this->brand_id)->update([
             'name'  =>$this->name,
@@ -71,6 +71,19 @@ class Index extends Component
             'status'    =>$this->status == true ? '1':'0'
         ]);
         session()->flash('message', 'Brand Added');
+        $this->dispatch('close-modal');
+        $this->resetInput();
+    }
+
+    // delete
+    public function deleteBrand($brand_id) {
+        $this->brand_id = $brand_id;
+    }
+
+    // destroy
+    public function destroyBrand() {
+        Brand::findOrFail($this->brand_id)->delete();
+        session()->flash('message', "succes deleted data");
         $this->dispatch('close-modal');
         $this->resetInput();
     }
