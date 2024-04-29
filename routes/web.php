@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,18 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
         Route::get('/products', 'index')->name('products-index');
         Route::get('/products/create', 'create')->name('products-create');
         Route::post('/products/store', 'store')->name('products-store');
+        Route::get('/products/edit/{id}', 'edit')->name('products-edit');
+        Route::put('/products/update/{id}', 'update')->name('products-update');
+        Route::get('/products/delete/{id}', 'delete')->name('products-delete');
+
+        // untuk hapus gambar satu persatu
+        Route::get('/products/delete-image/{id}', 'deleteImage')->name('products-delete-image');
+    });
+
+    //colors
+    Route::controller(ColorController::class)->group(function(){
+        Route::get('/colors', 'index')->name('colors-index');
+        Route::get('/colors/create', 'create')->name('colors-create');
     });
     
 });

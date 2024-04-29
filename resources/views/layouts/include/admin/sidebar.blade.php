@@ -53,6 +53,14 @@
             </a>
         </li>
 
+        <!-- Colors -->
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('colors-index') }}">
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                <span class="menu-title">Colors</span>
+            </a>
+        </li>
+
         <!-- User -->
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#users" aria-expanded="false" aria-controls="users">
