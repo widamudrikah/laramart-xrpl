@@ -62,6 +62,9 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
     Route::controller(ColorController::class)->group(function(){
         Route::get('/colors', 'index')->name('colors-index');
         Route::get('/colors/create', 'create')->name('colors-create');
+        Route::post('/colors/store', 'store')->name('colors-store');
+        Route::get('/colors/edit/{id}','edit')->name('colors-edit');
+
     });
     
 });
