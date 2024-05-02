@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -21,7 +22,8 @@ class ProductController extends Controller
     public function create() {
         $categories = Category::all();
         $brands     = Brand::all();
-        return view('admin.product.create', compact('categories', 'brands'));
+        $colors     = Color::all();
+        return view('admin.product.create', compact('categories', 'brands', 'colors'));
     }
 
     public function store(ProductRequest $request) {
@@ -63,6 +65,17 @@ class ProductController extends Controller
             }
         }
 
+        // color
+        if($request->colors) {
+            foreach($request->colors as $key => $color) {
+                $product->productColors()->create([
+                    'product_id'    => $product->id,
+                    'color_id'      => $color,
+                    'quantity'      => $request->colorquantity[$key] ?? 0
+                ]);
+            }
+        }
+
         return redirect()->route('products-index')->with('message', 'Product Added Successfully');
 
     }
@@ -71,8 +84,12 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $product = Product::findOrFail($product_id);
-        return view('admin.product.edit', compact('categories', 'brands', 'product'));
-    }
+        // warna yang udah dipake
+        $productColor = $product->productColors->pluck('color_id')->toArray();
+        // warna yang belum dipake
+        $colors = Color::whereNotIn('id', $productColor)->get();
+        return view('admin.product.edit', compact('categories', 'brands', 'product', 'colors'));
+    }   
 
     public function update(ProductRequest $request, $product_id) {
         $validatedData = $request->validated();

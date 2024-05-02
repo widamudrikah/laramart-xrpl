@@ -19,7 +19,7 @@
                 </h3>
             </div>
             <div class="card-body">
-                <form action="" method="POST">
+                <form action="{{ route('colors-update', $color->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                     <div class="mb-3">

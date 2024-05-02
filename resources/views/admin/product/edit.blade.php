@@ -47,6 +47,11 @@
                                 Product Image
                             </button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="color-tab" data-bs-toggle="tab" data-bs-target="#color-tab-pane" type="button" role="tab" aria-controls="color-tab-pane" aria-selected="false">
+                                Product Color
+                            </button>
+                        </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
 
@@ -169,6 +174,61 @@
                                 @endif
                             </div>
 
+                        </div>
+                        <!-- color -->
+                        <div class="p-3 tab-pane fade" id="color-tab-pane" role="tabpanel" aria-labelledby="color-tab" tabindex="0">
+                            <!-- ini untuk warna yang belum pernah ditambahkan -->
+                            <div class="mb-3">
+                                <h4>Add Product Color</h4>
+                                <label for="">select color</label>
+                                <hr/>
+                                <div class="row">
+                                    @forelse($colors as $colorItem)
+                                    <div class="col-md-3">
+                                        <div class="p-2 border mb-3">
+                                            Color : <input type="checkbox" name="colors[{{$colorItem->id}}]" value="{{$colorItem->id}}">
+                                            {{$colorItem->name}}
+                                            <br>
+                                            Quantity : <input type="number" name="colorquantity[{{$colorItem->id}}]" style="width: 70px; border: 1px solid">
+                                        </div>
+                                    </div>
+                                    @empty
+                                    <div class="col-md-12">
+                                        <h4>No Color Found</h4>
+                                    </div>
+                                    @endforelse
+                                </div>
+                            </div>
+
+                            <!-- ini untuk warna yang sudah terpakai -->
+                            <div class="table-responsive">
+                                <table class="table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Color Name</th>
+                                            <th>Quantity</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($product->productColors as $prodColor)
+                                        <tr>
+                                            <td>
+                                                
+                                            </td>
+
+                                            <td>
+
+                                            </td>
+
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary text-white">Submit</button>
                     </div>

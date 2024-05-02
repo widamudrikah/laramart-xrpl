@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-md-12 grid-margin">
-
+        <!-- ini untuk alert message -->
         @if(session('message'))
         <div class="alert alert-success">{{session('message')}}</div>
         @endif
@@ -38,7 +38,7 @@
                             <td>{{$color->status ? 'Hidden' : 'Visible'}}</td>
                             <td>
                                 <a href="{{ route('colors-edit', $color->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="{{ route('colors-delete', $color->id) }}" onclick="return confirm('Yakin mau hapus warna {{$color->name}}')" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                         </tr>
                         @endforeach
