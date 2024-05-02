@@ -84,9 +84,7 @@ class ProductController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $product = Product::findOrFail($product_id);
-        // warna yang udah dipake
         $productColor = $product->productColors->pluck('color_id')->toArray();
-        // warna yang belum dipake
         $colors = Color::whereNotIn('id', $productColor)->get();
         return view('admin.product.edit', compact('categories', 'brands', 'product', 'colors'));
     }   

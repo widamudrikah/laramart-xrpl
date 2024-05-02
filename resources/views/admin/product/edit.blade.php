@@ -11,7 +11,7 @@
             </div>
             <div class="card-body">
                 @if(session('message'))
-                    <h4 class="alert alert-success">{{session('message')}}</h4>
+                <h4 class="alert alert-success">{{session('message')}}</h4>
                 @endif
 
                 @if ($errors->any())
@@ -181,7 +181,7 @@
                             <div class="mb-3">
                                 <h4>Add Product Color</h4>
                                 <label for="">select color</label>
-                                <hr/>
+                                <hr />
                                 <div class="row">
                                     @forelse($colors as $colorItem)
                                     <div class="col-md-3">
@@ -202,7 +202,7 @@
 
                             <!-- ini untuk warna yang sudah terpakai -->
                             <div class="table-responsive">
-                                <table class="table-bordered">
+                                <table class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Color Name</th>
@@ -214,15 +214,22 @@
                                         @foreach($product->productColors as $prodColor)
                                         <tr>
                                             <td>
-                                                
+                                                @if($prodColor->color)
+                                                {{ $prodColor->color->name }}
+                                                @else
+                                                No color Found
+                                                @endif
                                             </td>
 
                                             <td>
-
+                                                <div class="input-group mb-3" style="width: 150px;">
+                                                    <input type="text" class="form-control form-control-sm">
+                                                    <button class="btn btn-primary btn-sm text-white">Update</button>
+                                                </div>
                                             </td>
 
                                             <td>
-
+                                                <button class="btn btn-danger btn-sm text-white">Delete</button>
                                             </td>
                                         </tr>
                                         @endforeach
