@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
+use App\Models\ProductColor;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -158,6 +159,22 @@ class ProductController extends Controller
         }
         $product->delete();
         return redirect()->back()->with('message', 'Berhasil hapus product');
+    }
+
+    public function updateProdColorQty(Request $request, $prod_color_id) {
+        $productColorData   = ProductColor::find($prod_color_id);
+
+        $productColorData->update([
+            'quantity'  =>  $request->quantity
+        ]);
+
+        return response()->json(['message' => 'berhasil update Quantity']);
+    }
+
+    public function deleteProdColorQty($prod_color_id) {
+        $prodColor = ProductColor::findOrFail($prod_color_id);
+        $prodColor->delete();
+        return response()->json(['message'=> 'Behasil hapus warna']);
     }
 
 }

@@ -5,6 +5,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>LaraMart</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('admin/vendors/mdi/css/materialdesignicons.min.css')}}">
@@ -58,6 +62,9 @@
     <!-- End custom js for this page-->
 
     <script src="{{ asset('admin/js/jquery.cookie.js')}}" type="text/javascript"></script>
+    <!-- AJAX -->
+    @yield('scripts')
+    <!-- LIVEWIRE -->
     @livewireScripts
     @stack('script')
 </body>

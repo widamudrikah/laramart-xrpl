@@ -212,7 +212,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($product->productColors as $prodColor)
-                                        <tr>
+                                        <tr class="prod-color-tr">
                                             <td>
                                                 @if($prodColor->color)
                                                 {{ $prodColor->color->name }}
@@ -223,13 +223,13 @@
 
                                             <td>
                                                 <div class="input-group mb-3" style="width: 150px;">
-                                                    <input type="text" class="form-control form-control-sm">
-                                                    <button class="btn btn-primary btn-sm text-white">Update</button>
+                                                    <input type="text" value="{{$prodColor->quantity}}" class="productColorQuantity form-control form-control-sm">
+                                                    <button type="button" value="{{$prodColor->id}}" class="updateProductColorBtn btn btn-primary btn-sm text-white">Update</button>
                                                 </div>
                                             </td>
 
                                             <td>
-                                                <button class="btn btn-danger btn-sm text-white">Delete</button>
+                                                <button type="button" value="{{$prodColor->id}}" class="deleteProductColorBtn btn btn-danger btn-sm text-white">Delete</button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -244,4 +244,65 @@
         </div>
     </div>
 </div>
+@endsection
+
+<!-- AJAX -->
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        // AJAX LARAVEL
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // update quantity
+        $(document).on('click', '.updateProductColorBtn', function() {
+            // mendapatkan id product
+            var product_id = "{{ $product->id }}"
+            // mendapatkan id color product
+            var prod_color_id = $(this).val();
+            // mendapatkan quantity
+            var quantity = $(this).closest('.prod-color-tr').find('.productColorQuantity').val();
+
+            if (quantity <= 0) {
+                alert('Quantity is required');
+                return false;
+            }
+
+            var data = {
+                'product_id': product_id,
+                'quantity': quantity
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/product-color/" + prod_color_id,
+                data: data,
+                success: function(response) {
+                    alert(response.message);
+                }
+
+            });
+        });
+
+        // delete color
+        $(document).on('click', '.deleteProductColorBtn', function() {
+            var prod_color_id = $(this).val();
+            var thisClick = $(this);
+
+            $.ajax({
+                type    : "GET",
+                url     : "/admin/product-color/" + prod_color_id + "/delete",
+                success : function(response) {
+                    thisClick.closest('.prod-color-tr').remove();
+                    alert(response.message);
+                }
+            })
+        });
+        
+    });
+</script>
+
 @endsection

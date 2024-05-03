@@ -56,6 +56,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
 
         // untuk hapus gambar satu persatu
         Route::get('/products/delete-image/{id}', 'deleteImage')->name('products-delete-image');
+
+        // AJAX
+        Route::post('/product-color/{prod_color_id}', 'updateProdColorQty');
+        Route::get('/product-color/{prod_color_id}/delete', 'deleteProdColorQty');
     });
 
     //colors
