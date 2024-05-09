@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,9 +20,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::controller(FrontendController::class)->group(function() {
+    Route::get('/', 'index');
+    Route::get('/collections', 'categories')->name('categories');
 });
+
+
 
 Auth::routes();
 
@@ -71,6 +80,15 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function(){
         Route::put('/colors/update/{id}','update')->name('colors-update');
         Route::get('/colors/delete/{id}','delete')->name('colors-delete');
 
+    });
+
+    Route::controller(SliderController::class)->group(function(){
+        Route::get('/slider', 'index')->name('slider-index');
+        Route::get('/slider/create', 'create')->name('slider-create');
+        Route::post('/slider/store', 'store')->name('slider-store');
+        Route::get('/slider/edit/{slider}', 'edit')->name('slider-edit');
+        Route::put('/slider/update/{slider}', 'update')->name('slider-update');
+        Route::get('/slider/delete/{slider}', 'delete')->name('slider-delete');
     });
     
 });
