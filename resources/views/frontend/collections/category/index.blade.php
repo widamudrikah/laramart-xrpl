@@ -9,18 +9,25 @@
                 <div class="col-md-12">
                     <h4 class="mb-4">Our Categories</h4>
                 </div>
+
+                @forelse($categories as $category)
                 <div class="col-6 col-md-3">
                     <div class="category-card">
-                        <a href="">
+                        <a href="{{ route('products-category', $category->slug) }}">
                             <div class="category-card-img">
-                                <img src="laptop.jpg" class="w-100" alt="Laptop">
+                                <img src="{{ asset('upload/category/'.$category->image) }}" class="w-100" alt="Laptop">
                             </div>
                             <div class="category-card-body">
-                                <h5>Laptop</h5>
+                                <h5>{{ $category->name }}</h5>
                             </div>
                         </a>
                     </div>
                 </div>
+                @empty
+                <div class="col-md-12">
+                    <h5>No categories available</h5>
+                </div>
+                @endforelse
             </div>
         </div>
 </div>
