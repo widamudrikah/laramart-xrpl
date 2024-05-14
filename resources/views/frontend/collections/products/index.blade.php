@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <livewire:frontend.product.index :products="$products" :category="$category"/>
+        <livewire:frontend.product.index :category="$category"/>
 
     </div>
 </div>
