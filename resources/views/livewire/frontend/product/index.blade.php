@@ -4,23 +4,37 @@
 
         <div class="col-md-3">
             @if($category->brands)
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Brands</h4>
-                    </div>
-                    <div class="card-body">
-                        @foreach($category->brands as $brandItem)
-                        <label class="d-block">
-                            <input type="checkbox"> {{$brandItem->name}}
-                        </label>
-                        @endforeach
-                    </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4>Brands</h4>
                 </div>
+                <div class="card-body">
+                    @foreach($category->brands as $brandItem)
+                    <label class="d-block">
+                        <input type="checkbox" wire:model="brandInputs" wire:click="applyFilter" value="{{ $brandItem->name }}"> {{$brandItem->name}}
+                    </label>
+                    @endforeach
+                </div>
+            </div>
             @else
-                <div class="card">
-                    <h3>No Brand found</h3>
-                </div>
+            <div class="card">
+                <h3>No Brand found</h3>
+            </div>
             @endif
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h4>Price</h4>
+                </div>
+                <div class="card-body">
+                    <label class="d-block">
+                        <input type="radio" name="priceSort" wire:click="applyFilter" wire:model="priceInput" value="high-to-low"> High to Low
+                    </label>
+                    <label class="d-block">
+                        <input type="radio" name="priceSort" wire:click="applyFilter" wire:model="priceInput" value="low-to-high"> Low to High
+                    </label>
+                </div>
+            </div>
 
         </div>
 
@@ -36,13 +50,14 @@
                             @else
                             <label class="stock bg-danger">Out Stock</label>
                             @endif
-
-                            <img src="{{ asset( $product->productImages[0]->image ) }}" alt="Laptop">
+                            <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}">
+                                <img src="{{ asset( $product->productImages[0]->image ) }}" alt="Laptop">
+                            </a>
                         </div>
                         <div class="product-card-body">
                             <p class="product-brand">{{ $product->brand }}</p>
                             <h5 class="product-name">
-                                <a href="">
+                                <a href="{{ url('/collections/'.$product->category->slug.'/'.$product->slug) }}">
                                     {{ $product->name }}
                                 </a>
                             </h5>
