@@ -9,14 +9,16 @@ class Index extends Component
 {
     public $products, $category, $brandInputs = [], $priceInput;
 
+    protected $queryString = [
+        'brandInputs'   => ['except' => '', 'as' => 'brand'],
+        'priceInput'   => ['except' => '', 'as' => 'price'],
+    ];
+
     public function mount($category)
     {
         $this->category = $category;
     }
-    protected $querystring = [
-        'brandInputs'   => ['except' => '', 'as' => 'brand'],
-        'priceInput'   => ['except' => '', 'as' => 'price'],
-    ];
+    
 
     public function render()
     {
